@@ -13,7 +13,7 @@ from azureml.data.dataset_factory import TabularDatasetFactory
 
 # TODO: Create TabularDataset using TabularDatasetFactory
 # Data is located at:
-_DATA_URL = "https://github.com/jfcarmonag/nd00333-capstone/blob/master/starter_file/BankChurners.csv"
+_DATA_URL = 'https://github.com/jfcarmonag/nd00333-capstone/raw/master/starter_file/BankChurners.csv'
 
 def clean_data(data):
     
@@ -74,14 +74,14 @@ def main():
     parser.add_argument('--gamma', type=float, default= 0.5)
     parser.add_argument('--reg_lambda', type=float, default= 1.0)
     parser.add_argument('--scale_pos_weight', type=float, default=3.0)
-    args = parser.parse_args()
+    args, unknown = parser.parse_known_args()
 
     run = Run.get_context()
 
     run.log("max_depth:", np.float(args.max_depth))
-    run.log("learning_rate:", np.int(args.learning_rate))
+    run.log("learning_rate:", np.float(args.learning_rate))
     run.log("gamma:", np.float(args.gamma))
-    run.log("reg_lambda:", np.int(args.reg_lambda))
+    run.log("reg_lambda:", np.float(args.reg_lambda))
     run.log("scale_pos_weight:", np.float(args.scale_pos_weight))
 
     x, y = get_clean_data()
@@ -93,8 +93,8 @@ def main():
                             learning_rate=args.learning_rate, 
                             gamma=args.gamma, 
                             reg_lambda=args.reg_lambda,
-                            scale_pos_weight=args.scale_pos_weight).fit(x_train,
-                            y_train)
+                            scale_pos_weight=args.scale_pos_weight)
+    model.fit(x_train,y_train)
     y_pred = model.predict(x_test)
     accuracy = accuracy_score(y_pred, y_test)
     run.log("Accuracy", np.float(accuracy))
