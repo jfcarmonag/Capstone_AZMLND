@@ -22,33 +22,33 @@ def clean_data(data):
     x_df = data.to_pandas_dataframe().dropna()
     x_df['Attrition_Flag'].replace({'Existing Customer':0, 
     'Attrited Customer':1},inplace=True)
-    df.drop(df.columns[[0,-1,-2]].values,axis=1,inplace=True)
+    x_df.drop(x_df.columns[[0,-1,-2]].values,axis=1,inplace=True)
     map_education_level = {'High School':1,'Graduate':3,'Uneducated':0,
     'College':2,'Post-Graduate':4,'Doctorate':5}
     map_income_level = {'$60K - $80K':3,'Less than $40K':1, '$80K - $120K':4,
     '$40K - $60K':2,'$120K +':5}
     map_card_category = {'Blue':1,'Gold':3,'Silver':2,'Platinum':4}
-    df['Education_Level'].replace(map_education_level,inplace=True)
-    df['Income_Category'].replace(map_income_level,inplace=True)
-    df['Card_Category'].replace(map_card_category,inplace=True)
+    x_df['Education_Level'].replace(map_education_level,inplace=True)
+    x_df['Income_Category'].replace(map_income_level,inplace=True)
+    x_df['Card_Category'].replace(map_card_category,inplace=True)
     # #hot encoding of gender category
-    df.insert(2,'Gender_M',df['Gender'],True)
-    df.rename({'Gender':'Gender_F'},axis=1,inplace=True)
-    df['Gender_M'].replace({'M':1,'F':0},inplace=True)
-    df['Gender_F'].replace({'M':0,'F':1},inplace=True)
+    x_df.insert(2,'Gender_M',x_df['Gender'],True)
+    x_df.rename({'Gender':'Gender_F'},axis=1,inplace=True)
+    x_df['Gender_M'].replace({'M':1,'F':0},inplace=True)
+    x_df['Gender_F'].replace({'M':0,'F':1},inplace=True)
     #
     # #hot encoding of marital status
-    df.insert(7,'Single',df['Marital_Status'],True)
-    df.insert(7,'Divorced',df['Marital_Status'],True)
-    df.insert(7,'Unknown',df['Marital_Status'],True)
-    df.rename({'Marital_Status':'Married'},axis=1,inplace=True)
-    df['Married'].replace({'Single':0, 'Married':1, 'Divorced':0, 'Unknown':0},
+    x_df.insert(7,'Single',x_df['Marital_Status'],True)
+    x_df.insert(7,'Divorced',x_df['Marital_Status'],True)
+    x_df.insert(7,'Unknown',x_df['Marital_Status'],True)
+    x_df.rename({'Marital_Status':'Married'},axis=1,inplace=True)
+    x_df['Married'].replace({'Single':0, 'Married':1, 'Divorced':0, 'Unknown':0},
     inplace=True)
-    df['Single'].replace({'Single':1, 'Married':0, 'Divorced':0, 'Unknown':0},
+    x_df['Single'].replace({'Single':1, 'Married':0, 'Divorced':0, 'Unknown':0},
     inplace=True)
-    df['Divorced'].replace({'Single':0, 'Married':0, 'Divorced':1, 'Unknown':0},
+    x_df['Divorced'].replace({'Single':0, 'Married':0, 'Divorced':1, 'Unknown':0},
     inplace=True)
-    df['Unknown'].replace({'Single':0, 'Married':0, 'Divorced':0, 'Unknown':1},
+    x_df['Unknown'].replace({'Single':0, 'Married':0, 'Divorced':0, 'Unknown':1},
     inplace=True)
     y_df = x_df.pop("Attrition_Flag")
     return x_df, y_df
@@ -87,9 +87,11 @@ def main():
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, 
                                                         random_state=42)
     model = xgb.XGBClassifier(objective="binary:logistic", 
-                            missing=Nonemax_depth=args.max_depth, 
+                            missing=None,
+                            max_depth=args.max_depth, 
                             learning_rate=args.learning_rate, 
-                            gamma=args.gamma, reg_lambda=args.reg_lambda,
+                            gamma=args.gamma, 
+                            reg_lambda=args.reg_lambda,
                             scale_pos_weight=args.scale_pos_weight).fit(x_train,
                             y_train)
 
