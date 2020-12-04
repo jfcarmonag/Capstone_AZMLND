@@ -25,9 +25,9 @@ def clean_data(data):
     'Attrited Customer':1},inplace=True)
     x_df.drop(x_df.columns[[0,-1,-2]].values,axis=1,inplace=True)
     map_education_level = {'High School':1,'Graduate':3,'Uneducated':0,
-    'College':2,'Post-Graduate':4,'Doctorate':5}
+    'College':2,'Post-Graduate':4,'Doctorate':5, 'Unknown':0}
     map_income_level = {'$60K - $80K':3,'Less than $40K':1, '$80K - $120K':4,
-    '$40K - $60K':2,'$120K +':5}
+    '$40K - $60K':2,'$120K +':5, 'Unknown':0}
     map_card_category = {'Blue':1,'Gold':3,'Silver':2,'Platinum':4}
     x_df['Education_Level'].replace(map_education_level,inplace=True)
     x_df['Income_Category'].replace(map_income_level,inplace=True)
@@ -69,7 +69,7 @@ def main():
     # Smaller values cause stronger regularization")
     # parser.add_argument('--max_iter', type=int, default=100, 
     # help="Maximum number of iterations to converge")
-    parser.add_argument('--max_depth', type=float, default= 4.0)
+    parser.add_argument('--max_depth', type=float, default= 4)
     parser.add_argument('--learning_rate', type=float, default= 0.1)
     parser.add_argument('--gamma', type=float, default= 0.5)
     parser.add_argument('--reg_lambda', type=float, default= 1.0)
@@ -78,13 +78,14 @@ def main():
 
     run = Run.get_context()
 
-    run.log("max_depth:", np.float(args.max_depth))
+    run.log("max_depth:", np.int(args.max_depth))
     run.log("learning_rate:", np.float(args.learning_rate))
     run.log("gamma:", np.float(args.gamma))
     run.log("reg_lambda:", np.float(args.reg_lambda))
     run.log("scale_pos_weight:", np.float(args.scale_pos_weight))
 
     x, y = get_clean_data()
+    print(set(x['Income_Category']))
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, 
                                                         random_state=42)
     model = xgb.XGBClassifier(objective="binary:logistic", 
