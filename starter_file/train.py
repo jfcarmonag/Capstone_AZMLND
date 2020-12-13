@@ -13,7 +13,7 @@ from azureml.data.dataset_factory import TabularDatasetFactory
 
 # TODO: Create TabularDataset using TabularDatasetFactory
 # Data is located at:
-_DATA_URL = 'https://github.com/jfcarmonag/nd00333-capstone/raw/master/starter_file/BankChurners.csv'
+_DATA_URL = "https://github.com/jfcarmonag/Capstone_AZMLND/raw/master/starter_file/BankChurners.csv"
 
 def clean_data(data):
     
