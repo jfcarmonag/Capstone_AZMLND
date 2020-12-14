@@ -69,7 +69,7 @@ def main():
     # Smaller values cause stronger regularization")
     # parser.add_argument('--max_iter', type=int, default=100, 
     # help="Maximum number of iterations to converge")
-    parser.add_argument('--max_depth', type=float, default= 4)
+    parser.add_argument('--max_depth', type=int, default= 4)
     parser.add_argument('--learning_rate', type=float, default= 0.1)
     parser.add_argument('--gamma', type=float, default= 0.5)
     parser.add_argument('--reg_lambda', type=float, default= 1.0)
