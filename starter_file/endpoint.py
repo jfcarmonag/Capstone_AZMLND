@@ -13,7 +13,7 @@ data = {"data":
           {"Attrition_Flag":0,
           "Customer_Age": 45,
           "Gender_M":1,
-          "Gender_F":0
+          "Gender_F":0,
           "Dependent_count":3,
           "Education_Level":2,
           "Married":0,

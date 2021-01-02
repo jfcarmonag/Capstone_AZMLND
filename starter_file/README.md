@@ -1,22 +1,20 @@
-*NOTE:* This file is a template that you can use to create the README for your project. The *TODO* comments below will highlight the information you should be sure to include.
 
-# Your Project Title Here
 
-*TODO:* Write a short introduction to your project.
+# Prediction of Bank Churners using AzureML
 
-## Project Set Up and Installation
-*OPTIONAL:* If your project has any special installation steps, this is where you should put it. To turn this project into a professional portfolio project, you are encouraged to explain how to set up this project in AzureML.
+*TODO:* In this project we show how to train and deploy a model that predicts bank churners. We use AutoML and Hyperdrive to build two predictive models and choose the best one for deployment. Finally, we save the model in ONNX format for further uses.
+
 
 ## Dataset
 
 ### Overview
-*TODO*: Explain about the data you are using and where you got it from.
+The dataset contains the features from about 10.000 credit card users. Among the features we find, for example,  The target column is called *Attrition_label*. This data is originally extracted from (Analyttica Website)[https://leaps.analyttica.com/home]
 
 ### Task
-*TODO*: Explain the task you are going to be solving with this dataset and the features you will be using for it.
+The task in this project is pretty straightforward: we would like to predict the *Attrition_label* column. This column contains only two possible values, (after preprocessing, these are: 1=churner, 0=no churner). Thus, this a classification problem of supervised learning type.
 
 ### Access
-*TODO*: Explain how you are accessing the data in your workspace.
+To access the data, we first saved the data in a public [GitHub repository](https://github.com/jfcarmonag/Capstone_AZMLND/raw/master/starter_file/BankChurners.csv), then we use the **TabularDatasetFactory** module to access it.
 
 ## Automated ML
 *TODO*: Give an overview of the `automl` settings and configuration you used for this experiment
