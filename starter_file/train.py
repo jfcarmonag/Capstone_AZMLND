@@ -5,7 +5,7 @@ import numpy as np
 from sklearn.metrics import mean_squared_error, confusion_matrix
 import joblib
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, f1_score
 from sklearn.preprocessing import OneHotEncoder
 import pandas as pd
 from azureml.core.run import Run
@@ -97,8 +97,8 @@ def main():
                             scale_pos_weight=args.scale_pos_weight)
     model.fit(x_train,y_train)
     y_pred = model.predict(x_test)
-    accuracy = accuracy_score(y_pred, y_test)
-    run.log("Accuracy", np.float(accuracy))
+    f1_score = f1_score(y_test, y_pred)
+    run.log("F1_score", np.float(f1_score))
     value = {
        "schema_type": "confusion_matrix",
        "schema_version": "v1",
