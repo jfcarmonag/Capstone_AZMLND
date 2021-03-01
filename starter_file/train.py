@@ -97,8 +97,8 @@ def main():
                             scale_pos_weight=args.scale_pos_weight)
     model.fit(x_train,y_train)
     y_pred = model.predict(x_test)
-    f1_score = f1_score(y_test, y_pred)
-    run.log("F1_score", np.float(f1_score))
+    f1 = f1_score(y_test, y_pred)
+    run.log("F1_score", np.float(f1))
     value = {
        "schema_type": "confusion_matrix",
        "schema_version": "v1",
